@@ -1,0 +1,170 @@
+# AlgorithmResearch.github.io
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+from jupyter_dash import JupyterDash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+import dash.dependencies
+import pandas as pd
+import plotly.graph_objects as go
+pd.options.plotting.backend = "plotly"
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
+data = pd.read_csv("C:/Users/ketak/Documents/Projects/E-A-R/algorithm_research_data.csv")
+app = dash.Dash(__name__)
+fig1 = px.scatter(data, x=data["Month"], y=data["Existing (DLD)"], color="Existing (DLD)")
+fig1.update_layout(title_text='Existing (DLD)', title_x=0.5)
+fig1.update_traces(marker=dict(size=22,
+                              line=dict(width=2)))
+fig1.update_layout(
+    yaxis_title="DLD in Billion (AED)",
+    font=dict(
+        size=16,
+    )
+
+)
+fig1.update_layout(barmode='group', xaxis_tickangle=-90)
+df_temp_rev = data[["Month", "RevPar (Abu Dhabi)","RevPar (Dubai)"]]
+df_temp_rev
+df_temp_rev = df_temp_rev.drop(df_temp_rev.index[[0,1,2,3,4,5,6,7,8,9,10,11]])
+df_temp_rev
+fig8.add_trace(go.Scatter(
+    x=df_temp_rev["Month"],
+    y=df_temp_rev["RevPar (Abu Dhabi)"],
+    name='RevPAR (Abu Dhabi)',
+    mode='markers',
+    marker_color='tomato',
+    
+))
+fig8.add_trace(go.Scatter(
+    x=df_temp_rev["Month"],
+    y=df_temp_rev["RevPar (Dubai)"],
+    mode='markers',
+    name='RevPAR (Dubai)',
+    marker_color='slateblue'
+))
+
+fig8.update_layout(
+    title={
+        'text': "RevPAR",
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'}, 
+    xaxis_title="Month",
+    yaxis_title="RevPAR in Million (AED)",
+    legend_title="City",
+    font=dict(
+        size=16,
+    )
+)
+fig8.update_layout(barmode='group', xaxis_tickangle=-90)
+fig8.update_traces(marker=dict(size=22,
+                              line=dict(width=2,)))
+
+fig8.show()
+fig10 = go.Figure()
+fig10.add_trace(go.Line(
+    x=data["Month"],
+    y=data["AT (Abu Dhabi)"],
+    name='Airport Traffic (Abu Dhabi)',
+    marker_color='darkviolet'
+))
+fig10.add_trace(go.Line(
+    x=data["Month"],
+    y=data["AT ( Dubai)"],
+    name='Airport Traffic (Dubai)',
+    marker_color='deeppink'
+))
+fig10.update_layout(
+    title={
+        'text': "Airport Traffic",
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'},
+    xaxis_title="Month",
+    yaxis_title= "Airport Traffic in Million (AED)",
+    legend_title="City",
+        font=dict(
+        size=16,
+    )
+
+)
+
+fig10.update_layout(barmode='group', xaxis_tickangle=-90)
+fig10.show()
+C:\Users\ketak\anaconda3\lib\site-packages\plotly\graph_objs\_deprecations.py:378: DeprecationWarning:
+
+plotly.graph_objs.Line is deprecated.
+Please replace it with one of the following more specific types
+  - plotly.graph_objs.scatter.Line
+  - plotly.graph_objs.layout.shape.Line
+  - etc.
+
+
+fig12 = go.Figure()
+fig12.add_trace(go.Line(
+    x=data["Month"],
+    y=data[" PMI"],
+    name='PMI',
+    marker_color='darkviolet'
+))
+fig12.add_trace(go.Scatter(
+    x=data["Month"],
+    y=data["PMI-std"],
+    marker_color='grey',
+    mode='markers',  
+    name = 'Base line'
+
+))
+fig12.update_layout(
+    title={
+        'text': "PMI",
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'},
+    xaxis_title="Month",
+    yaxis_title= "PMI",
+    font=dict(
+        size=16,
+    )
+
+)
+
+fig12.update_layout(barmode='group', xaxis_tickangle=-90)
+fig12.show()
+colors = {
+    'background': '#111111',
+    'text': 'Maroon'
+}
+app.layout = html.Div(
+    children=[
+        html.H1(children="E-A-R To The Ground",),
+        dcc.Graph(
+            figure= fig12           
+        ),
+         dcc.Graph(
+            figure= fig1,
+            
+
+        ),
+        dcc.Graph(
+            figure= fig8
+
+        ),
+        dcc.Graph(
+            figure= fig10
+
+        ),        
+    ],
+    style={
+            'textAlign': 'center',
+            'font-size' : '40px' ,
+            'color': colors['text']
+        }
+
+)                
